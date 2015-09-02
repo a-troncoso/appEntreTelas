@@ -1,5 +1,5 @@
-php
-extras
+php/
+extras/
 
 # Windows image file caches
 Thumbs.db
