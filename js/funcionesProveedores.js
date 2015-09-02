@@ -1,4 +1,4 @@
-var codProductoAEditar;
+var rutProveedorAEditar;
 
 function separarMiles(valor) {
 	var nums = new Array();
@@ -25,7 +25,7 @@ function separarMiles(valor) {
 
 function cargarTodosProveedores(){
 	$.ajax({
-		data:({nombreProductoPHP: '', codProductoPHP: '%%'}),
+		data:({rutProveedorPHP: '%%'}),
 		dataType: 'json',
 		timeout: 60000,
 		type: 'POST',
@@ -45,26 +45,25 @@ function cargarTodosProveedores(){
 						"<td>" + data[i][3] + "</td>" +
 						"<td>" + data[i][4] + "</td>" +
 						"<td>" + data[i][5] + "</td>" +
+						"<td>" + data[i][6] + "</td>" +
+						"<td>" + data[i][7] + "</td>" +
 						"<td><button type='button' id='" + data[i][0] + "' class='editarProveedor btn btn-warning' data-toggle='modal'>Editar</button></td>" +
 					"</tr>");
 			}
-			$('#cuerpoTablaProveedores').append(
-				"<tr>" +
-					"<td><button type='button' id='' class='btnNuevoProveedor btn btn-primary' data-toggle='modal'>Nuevo</button></td>" +
-					"<td></td>" +
-					"<td></td>" +
-					"<td></td>" +
-					"<td></td>" +
-					"<td></td>" +
-					"<td></td>" +
-				"</tr>"
-			);
 		}
 	});
 }
 
 function abrirModalNuevoProveedor(){
-	$("#cuerpoTablaProveedores").on('click', '.btnNuevoProveedor', function(){
+	// $("#cuerpoTablaProveedores").on('click', '.btnNuevoProveedor', function(){
+	// 	$("#modalIngresarProveedor").modal("show");
+	// 	$("#alertFaltaRellenar").css('display', 'none');
+	// 	verificaDigitoVerificador("#inpCodVerificadorNuevoProveedor");
+	// 	verificaDigitoVerificador("#inpRutNuevoProveedor");
+	// 	cargarRegiones();
+	// 	cargarComunas();
+	// });
+	$("#btnNuevoProveedor").click(function(){
 		$("#modalIngresarProveedor").modal("show");
 		$("#alertFaltaRellenar").css('display', 'none');
 		verificaDigitoVerificador("#inpCodVerificadorNuevoProveedor");
@@ -72,6 +71,8 @@ function abrirModalNuevoProveedor(){
 		cargarRegiones();
 		cargarComunas();
 	});
+
+	
 
 	// Este evento fuerza a que el input "inpNombreProducto" tenga el foco despues de abrir el modal
 	$('#modalIngresarProveedor').on('shown.bs.modal', function () {
@@ -200,7 +201,7 @@ function ingresarNuevoProveedor(){
 					$("#selComunaNuevoProveedor").val("");
 					$("#inpTelefonoNuevoProveedor").val("");
 					$("#inpEmailNuevoProveedor").val("");
-					$('#modalIngresarProveedor').modal('hide');
+					$('#modalEditarPoveedor').modal('hide');
 					alert(data);
 					cargarTodosProveedores();
 				}
@@ -210,88 +211,117 @@ function ingresarNuevoProveedor(){
 		}
 	});
 }
+function abrirModalEditarProveedor(){
+	$("#cuerpoTablaProveedores").on("click", ".editarProveedor", function(){
+		$("#modalEditarPoveedor").modal("show");
+		$("#alertFaltaRellenarModalEditarProveedor").css("display", "none");
+		$("#alertConfirmaEliminarProveedor").css("display", "none");
 
-// function calcularValorBrutoProducto(contenedorModificado, contenedorCalculado){
-// 	$(contenedorModificado).on('input', function(){
-// 		$(contenedorCalculado).val(Math.round(parseInt($(contenedorModificado).val()) + (parseInt($(contenedorModificado).val()) * 0.19)));
-// 	});
-// }
-// function calcularValorNetoProducto(contenedorModificado, contenedorCalculado){
-// 	$(contenedorModificado).on('input', function(){
-// 		$(contenedorCalculado).val(Math.round(parseInt($(contenedorModificado).val()) / (1.19)));
-// 	});
-// }
+		rutProveedorAEditar = $(this).attr('id');
 
-// function abrirModalEditarProducto(){
-// 	$("#cuerpoTablaProductos").on("click", ".editarProducto", function(){
-// 		$("#modalEditarProducto").modal("show");
-// 		$("#alertFaltaRellenarModalEditarProducto").css("display", "none");
-// 		$("#alertConfirmaEliminarProducto").css("display", "none");
+		$.ajax({
+			data:({rutProveedorPHP: rutProveedorAEditar}),
+			dataType: 'json',
+			timeout: 60000,
+			type: 'POST',
+			url: 'php/consultaProveedores.php',
+			error: function(jqXHR,text_status,strError){
+				$("#inpNombreProveedorAEditar").val("");
+				$("#inpGiroProveedorAEditar").val("");
+				$("#inpDireccionProveedorAEditar").val("");
+				$("#selRegionProveedorAEditar").html("");
+				$("#selComunaProveedorAEditar").html("");
+				$("#inpTelefonoProveedorAEditar").val("");
+				$("#inpEmailProveedorAEditar").val("");
+				alert("Ha habido un error al cargar los datos del proeveedor: " + strError);
+			},
+			success: function(data){
+				
+				$("#inpNombreProveedorAEditar").val("");
+				$("#inpGiroProveedorAEditar").val("");
+				$("#inpDireccionProveedorAEditar").val("");
+				$("#selRegionProveedorAEditar").html("");
+				$("#selComunaProveedorAEditar").html("");
+				$("#inpTelefonoProveedorAEditar").val("");
+				$("#inpEmailProveedorAEditar").val("");
 
-// 		codProductoAEditar = $(this).attr('id');
-// 		// console.log(codProducto);
+				$("#inpNombreProveedorAEditar").val(data[0][1]);
+				$("#inpGiroProveedorAEditar").val(data[0][2]);
+				$("#inpDireccionProveedorAEditar").val(data[0][3]);
 
-// 		$.ajax({
-// 			data:({nombreProductoPHP: '', codProductoPHP: codProductoAEditar}),
-// 			dataType: 'json',
-// 			timeout: 60000,
-// 			type: 'POST',
-// 			url: 'php/consultaProductos.php',
-// 			error: function(jqXHR,text_status,strError){
-// 				$("#inpNombreProductoAEditar").val("");
-// 				$("#inpValorNetoVentaProductoAEditar").val("");
-// 				$("#inpValorBrutoVentaAEditar").val("");
-// 				alert("Ha habido un error al cargar los datos del producto: " + strError);
-// 			},
-// 			success: function(data){
-// 				$("#inpNombreProductoAEditar").val("");
-// 				$("#inpValorNetoVentaProductoAEditar").val("");
-// 				$("#inpValorBrutoVentaAEditar").val("");
+				$("#selRegionProveedorAEditar").html("<option>" + data[0][4] + "</option>");
+				$("#selComunaProveedorAEditar").html("<option>" + data[0][5] + "</option>");
 
-// 				$("#inpNombreProductoAEditar").val(data[0][1]);
-// 				$("#inpValorNetoVentaProductoAEditar").val(data[0][2]);
-// 				$("#inpValorBrutoVentaAEditar").val(data[0][4]);
-// 			}
-// 		});
-// 	});
-// }
+				$("#inpTelefonoProveedorAEditar").val(data[0][6]);
+				$("#inpEmailProveedorAEditar").val(data[0][7]);
+			}
+		});
+	});
+}
 
-// function editarProducto(){
-// 	$("#btnActualizarProducto").click(function(){
-// 		var nuevoNombreProducto = $("#inpNombreProductoAEditar").val();
-// 		var nuevoValorNetoVentaProducto = $("#inpValorNetoVentaProductoAEditar").val();
+function editarProveedor(){
+	$("#btnActualizarProveedor").click(function(){
 
-// 		// console.log(codProductoAEditar);
+		var nuevoNombreProveedor = $("#inpNombreProveedorAEditar").val();
+		var nuevoGiroProveedor = $("#inpGiroProveedorAEditar").val();
+		var nuevaDireccionProveedor = $("#inpDireccionProveedorAEditar").val();
+		var nuevaRegionProveedor = $("#selRegionProveedorAEditar").val();
+		var nuevaComunaProveedor = $("#selComunaProveedorAEditar").val();
+		var nuevoTelefonoProveedor = $("#inpTelefonoProveedorAEditar").val();
+		var nuevoEmailProveedor = $("#inpEmailProveedorAEditar").val();
 
-// 		if (nuevoNombreProducto != "" && nuevoValorNetoVentaProducto != ""){
-// 			$.ajax({
-// 				data:({codProductoAEditarPHP: codProductoAEditar,
-// 					nuevoNombreProductoPHP: nuevoNombreProducto,
-// 					nuevoValorNetoVentaProductoPHP: nuevoValorNetoVentaProducto}),
-// 				dataType: 'text',
-// 				timeout: 60000,
-// 				type: 'POST',
-// 				url: 'php/actualizaProducto.php',
-// 				error: function(jqXHR,text_status,strError){
-// 					$("#inpNombreProductoAEditar").val("");
-// 					$("#inpValorNetoVentaProductoAEditar").val("");
-// 					$("#inpValorBrutoVentaAEditar").val("");
-// 					alert("Ha habido un error al editar el producto: " + strError);
-// 				},
-// 				success: function(data){
-// 					$("#inpNombreProductoAEditar").val("");
-// 					$("#inpValorNetoVentaProductoAEditar").val("");
-// 					$("#inpValorBrutoVentaAEditar").val("");
-// 					$('#modalEditarProducto').modal('hide');
-// 					alert(data);
-// 					cargarTodosProductos();
-// 				}
-// 			});
-// 		}else{
-// 			$("#alertFaltaRellenarModalEditarProducto").css('display', 'block');
-// 		}
-// 	});
-// }
+		console.log(rutProveedorAEditar);
+
+		if (nuevoNombreProveedor != "" &&
+			nuevoGiroProveedor != "" &&
+			nuevaDireccionProveedor != "" &&
+			nuevaRegionProveedor != "" &&
+			nuevaComunaProveedor != "" &&
+			nuevoTelefonoProveedor != "" &&
+			nuevoEmailProveedor != ""){
+			$.ajax({
+				data:({
+					rutProveedorAEditarPHP: rutProveedorAEditar,
+					nuevoNombreProveedorPHP: nuevoNombreProveedor,
+					nuevoGiroProveedorPHP: nuevoGiroProveedor,
+					nuevaDireccionProveedorPHP: nuevaDireccionProveedor,
+					// nuevaRegionProveedorPHP: nuevaRegionProveedor,
+					// nuevaComunaProveedorPHP: nuevaComunaProveedor,
+					nuevoTelefonoProveedorPHP: nuevoTelefonoProveedor,
+					nuevoEmailProveedorPHP: nuevoEmailProveedor
+				}),
+				dataType: 'text',
+				timeout: 60000,
+				type: 'POST',
+				url: 'php/actualizaProveedor.php',
+				error: function(jqXHR,text_status,strError){
+					$("#inpNombreProveedorAEditar").val("");
+					$("#inpGiroProveedorAEditar").val("");
+					$("#inpDireccionProveedorAEditar").val("");
+					$("#selRegionProveedorAEditar").val("");
+					$("#selComunaProveedorAEditar").val("");
+					$("#inpTelefonoProveedorAEditar").val("");
+					$("#inpEmailProveedorAEditar").val("");
+					alert("Ha habido un error al editar el proveedor: " + strError);
+				},
+				success: function(data){
+					$("#inpNombreProveedorAEditar").val("");
+					$("#inpGiroProveedorAEditar").val("");
+					$("#inpDireccionProveedorAEditar").val("");
+					$("#selRegionProveedorAEditar").val("");
+					$("#selComunaProveedorAEditar").val("");
+					$("#inpTelefonoProveedorAEditar").val("");
+					$("#inpEmailProveedorAEditar").val("");
+					$('#modalEditarPoveedor').modal('hide');
+					alert(data);
+					cargarTodosProveedores();
+				}
+			});
+		}else{
+			$("#alertFaltaRellenarModalEditarProveedor").css('display', 'block');
+		}
+	});
+}
 
 // function mostrarAlertEliminarProducto(){
 // 	$("#btnEliminarProducto").click(function(){

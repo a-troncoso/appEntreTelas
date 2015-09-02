@@ -5,6 +5,8 @@ include('conec.php');
 $rutProveedor = $_POST['rutProveedorPHP'];
 $digitoVerificadorProveedor = $_POST['digitoVerificadorProveedorPHP'];
 $rutCompletoProveedor = ($rutProveedor) . ($digitoVerificadorProveedor);
+$periodo = $_POST['periodoPHP'];
+$codDocCompra = $_POST['codDocCompraPHP'];
 $numDocumento = $_POST['numDocumentoPHP'];
 $fechaEmisionDocumento = $_POST['fechaEmisionDocumentoPHP'];
 $arrayProductos = $_POST['arrayProductosPHP'];
@@ -35,12 +37,16 @@ if (mysql_num_rows($resultado1) == 0) {
 			// Solo si se seleccionó un producto y se indicó la cantidad se hace el insert
 			if ($arrayProductos[$i] != null && $arrayCantidades[$i] != "0") {
 				$sql = "INSERT INTO `compras` (`rutProveedor`,
+					`periodo`,
+					`codDocCompra`,
 					`numeroDocCompra`,
 					`codProducto`,
 					`cantidadComprada`,
 					`valorCompraNetoProducto`,
 					`fechaCompra`)
 				VALUES ('$rutCompletoProveedor',
+					'$periodo',
+					'$codDocCompra',
 					'$numDocumento',
 					'$arrayProductos[$i]',
 					'$arrayCantidades[$i]',

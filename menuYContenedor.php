@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -24,8 +26,8 @@
 						<ul class="nav navbar-nav">
 							<li><a href="#" id="btnCompras" style="color: #219A96;">COMPRAS</a></li>
 							<li><a href="#" id="btnVentas" style="color: #219A96;">VENTAS</a></li>
-							<!-- <li><a href="#" id="btnIngresarVenta" style="color: #219A96;">INGRESAR VENTA</a></li> -->
 							<li><a href="#" id="btnProductos" style="color: #219A96;">PRODUCTOS</a></li>
+							<li><a href="#" id="btnVendedores" style="color: #219A96;">VENDEDORES</a></li>
 							<li><a href="#" id="btnProveedores" style="color: #219A96;">PROVEEDORES</a></li>
 							<li><a href="#" id="btnInventario" style="color: #219A96;">INVENTARIO</a></li>
 							<li><a href="php/cerrarSesion.php" id="btnSalir" style="color: #219A96;">SALIR</a></li>

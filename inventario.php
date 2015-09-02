@@ -3,11 +3,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<link href="css/font-awesome.css" rel="stylesheet">
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Inventario</title>
+	<style type="text/css">
+	.numeros{
+		text-align: right;
+	}
+	.letras{
+		text-align: left;
+	}
+	</style>
 </head>
 <body>
 	<div class="row" >
@@ -34,11 +44,12 @@
 			<table id="tabla" class="table table-hover">
 				<thead>
 					<tr>
-						<th>CÓDIGO</th>
-						<th>PRODUCTO</th>
-						<th>SALDO</th>
-						<th>STOCK CRÍTICO</th>
-						<th>ALERTA SALDO</th>
+						<th class="numeros">CÓDIGO</th>
+						<th class="letras">PRODUCTO</th>
+						<th class="numeros">SALDO</th>
+						<th class="numeros">STOCK CRÍTICO</th>
+						<th class="numeros">ALERTA SALDO</th>
+						<th class="numeros">VALOR BRUTO</th>
 					</tr>
 				</thead>
 				<tbody id="cuerpoTablaInventario" class="cuerpoTablaInventario"></tbody>
@@ -56,6 +67,7 @@
 	$(document).ready(obtenerFechaActual("#inpFechaInventario"));
 	$(document).ready(cargarInventario);
 	$(document).ready(mostrarInventarioAlCambiarFecha);
+	$(document).ready(cargarTotalInventarioValorizado);
 	</script>
 </body>
 </html>

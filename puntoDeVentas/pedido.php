@@ -1,4 +1,4 @@
-﻿<?php session_start(); ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,17 +6,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Punto de venta EntreTelas</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
 	<!-- Bootstrap Styles-->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
     <link href="css/font-awesome.css" rel="stylesheet" />
     <!-- Morris Chart Styles-->
-    <link href="js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- <link href="js/morris/morris-0.4.3.min.css" rel="stylesheet" /> -->
     <!-- Custom Styles-->
     <link href="css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <style>
+    @media print {
+
+        #contenidoImprimir{
+            font-size: small;
+        }
+        
+    }
     #tablaInfoTicket tr{
         border: hidden;
     }
@@ -46,7 +55,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Ajustes</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                        <li><a href="index.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -59,7 +68,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a href="catalogo.php"><i class="fa fa-list"></i> Catálogo</a>
+                        <a href="catalogo.php"><i class="fa fa-list"></i> Cat&aacutelogo</a>
                     </li>
                     <li>
                         <a class="active-menu"  href="pedido.php"><i class="fa fa-file-text"></i> Pedido</a>
@@ -77,7 +86,7 @@
     			<div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Pedido <small>Entretelas</small>
+                            Pedido <small>Entretelas (Ticket <?php echo $_SESSION['numTicket'] ?>)</small>
                         </h1>
                     </div>
                 </div>
@@ -113,41 +122,42 @@
         </div>
     </div>
     <!-- style="display: none" -->
-    <div id="contenidoImprimir" >
+    <div id="contenidoImprimir">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                <h4><strong>EntreTelas</strong></h4>
+                <h4 style="font-size: small"><strong>EntreTelas</strong></h4>
             </div>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <table id="tablaInfoTicket" class="table table-condensed" >
+            <table id="tablaInfoTicket" class="table table-condensed" style="margin-bottom: 0px;">
                 <tbody id="" class=""  >
                     <tr>
-                        <td><strong>Ticket</strong></td>
-                        <td><?php echo $_SESSION['numTicket'] ?></td>
+                        <td style="font-size: small"><strong>Ticket</strong></td>
+                        <td style="font-size: small"><strong><?php echo $_SESSION['numTicket'] ?></strong></td>
                     </tr>
                      <tr>
-                        <td><strong>Fecha</strong></td>
-                        <td id="fechaEmisionTicket"></td>
+                        <td style="font-size: x-small"><strong>Fecha</strong></td>
+                        <td id="fechaEmisionTicket" style="font-size: x-small"></td>
                     </tr>
                      <tr>
-                        <td><strong>Hora</strong></td>
-                        <td id="horaEmisionTicket"></td>
+                        <td style="font-size: x-small"><strong>Hora</strong></td>
+                        <td id="horaEmisionTicket" style="font-size: x-small"></td>
                     </tr>
                      <tr>
-                        <td><strong>Vendedor</strong></td>
-                        <td><?php echo $_SESSION['nombreVendedorLogueado'] ?></td>
+                        <td style="font-size: x-small"><strong>Vendedor</strong></td>
+                        <td style="font-size: x-small"><?php echo $_SESSION['nombreVendedorLogueado'] ?></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <table id="tablaPedido" class="table table-hover">
+            <table id="tablaPedido" class="table table-hover" style="margin-bottom: 0px;">
                 <thead>
                     <tr>
-                        <th>PRODUCTO</th>
-                        <th>DESCUENTO</th>
-                        <th>TOTAL</th>
+                        <th style="font-size: small">Producto</th>
+                        <th style="font-size: small">Cant.</th>
+                        <th style="font-size: small">Dcto.</th>
+                        <th style="font-size: small">Total</th>
                     </tr>
                 </thead>
                 <tbody id="cuerpoTablaPedido" class="cuerpoTablaPedido"></tbody>
@@ -155,7 +165,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                <p>Gracias por su compra</p>
+                <p style="font-size: x-small; padding-top: 0px">Gracias por su compra</p>
             </div>
         </div>
     </div>
@@ -186,7 +196,7 @@
                                 <form action="" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <div class="col-xs-5">
-                                            <label class="control-label" for="">Código</label>
+                                            <label class="control-label" for="">C�digo</label>
                                         </div>
                                         <div class="col-xs-7">
                                             <input id="inpCodProducto" class="form-control" type="number" disabled="disabled">

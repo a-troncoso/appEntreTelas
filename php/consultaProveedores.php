@@ -3,14 +3,20 @@ header('Access-Control-Allow-Origin: *');
 
 include('conec.php');
 
+$rutProveedor = $_POST["rutProveedorPHP"];
+
 $sql ="SELECT proveedores.rutProveedor,
 proveedores.nombreProveedor,
+proveedores.giroProveedor,
 proveedores.direccionProveedor,
+regioneschile.nombreRegion,
 comunaschile.nombreComuna,
 proveedores.telefonoProveedor,
 proveedores.mailProveedor
-FROM proveedores, comunaschile
-WHERE proveedores.idComuna = comunaschile.idComuna;";
+FROM proveedores, comunaschile, regioneschile
+WHERE proveedores.idRegion = regioneschile.idRegion
+AND proveedores.idComuna = comunaschile.idComuna
+AND proveedores.rutProveedor like '$rutProveedor';";
 
 $resultado = mysql_query($sql);
 

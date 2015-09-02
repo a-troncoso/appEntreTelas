@@ -3,9 +3,22 @@ header('Access-Control-Allow-Origin: *');
 
 include('conec.php');
 
-$sql = "SELECT documentosdepago.codDocPago,
-documentosdepago.nombreDocPago
-FROM documentosdepago;";
+$numTicket = $_POST["numTicketPHP"];
+// $numTicket = 0;
+
+// Si el ticket es 0 quiere decir que es una venta q no se ha ingresado
+if ($numTicket == 0) {
+	$sql = "SELECT documentosdepago.codDocPago,
+	documentosdepago.nombreDocPago
+	FROM documentosdepago;";
+// Si el ticket es distinto de cero quiere decir q es una venta ingresada, por lo tanto se obtiene el codigo de doc pago del ese ticket
+}else{
+	$sql = "SELECT DISTINCT documentosdepago.codDocPago,
+	documentosdepago.nombreDocPago
+	FROM documentosdepago, ventas
+	WHERE documentosdepago.codDocPago = ventas.codDocPago
+	AND ventas.numTicket = $numTicket;";
+}
 
 $resultado = mysql_query($sql);
 

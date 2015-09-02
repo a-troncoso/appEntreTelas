@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/estilosIndex.css">
 	<meta charset="UTF-8">
@@ -34,8 +36,8 @@
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">       
             <div class="panel panel-info" >
                 <div class="panel-heading">
-                    <div class="panel-title"><strong>Ingresar</strong></div>
-                    <div style="float:right; font-size: 82%; position: relative; top:-10px"><a href="#" style="color: white;">¿Olvidaste tu contraseña?</a></div>
+                    <div class="panel-title"><strong>Sistema de control de ventas </strong><small>EntreTelas</small></div>
+                    <!-- <div style="float:right; font-size: 82%; position: relative; top:-10px"><a href="#" style="color: white;">¿Olvidaste tu contraseña?</a></div> -->
                 </div>
 
                 <div style="padding-top:30px" class="panel-body" >
@@ -75,7 +77,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="col-md-12 control">
                                 <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                     ¿No tienes cuenta?
@@ -84,7 +86,7 @@
                                 </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>  

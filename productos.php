@@ -3,28 +3,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Productos</title>
+	<style type="text/css">
+	.numeros{
+		text-align: right;
+	}
+	</style>
 </head>
 <body>
+<div class="container">
+	<button type='button' id='btnNuevoProducto' class='btnNuevoProducto btn btn-primary' data-toggle='modal'><i class="fa fa-plus"></i> Nuevo</button>
 	<div class="row" >
 		<div class="col-md-12">
 			<table id="tabla" class="table table-hover">
 				<thead>
 					<tr>
-						<th>CÓDIGO</th>
+						<th class="numeros">CÓDIGO</th>
 						<th>NOMBRE</th>
-						<th>VALOR NETO VENTA</th>
-						<th>VALOR VENTA</th>
-						<th>EDITAR</th>
+						<th class="numeros">VALOR NETO VENTA</th>
+						<th class="numeros">VALOR VENTA</th>
+						<th class="numeros">EDITAR</th>
 					</tr>
 				</thead>
 				<tbody id="cuerpoTablaProductos" class="cuerpoTablaProductos"></tbody>
 			</table>
 		</div>
 	</div>
+</div>
 
 	<!-- VENTANA MODAL INGRESAR PRODUCTO -->
 	<div class="modal fade" id="modalIngresarProducto" tabindex="-1" role="dialog" aria-labelleby="myModalLabel" aria-hidden="true">
@@ -67,7 +78,7 @@
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="inpStockCriticoProducto">Stock crítico</label>
 									<div class="col-md-7">
-										<input id="inpStockCriticoProducto" class="form-control input-md" name="inpStockCriticoProducto" type="number" min="0">
+										<input id="inpStockCriticoProducto" class="form-control input-md" name="inpStockCriticoProducto" type="number" min="0" value="25">
 									</div>
 								</div>
 								<div class="form-group">
@@ -177,6 +188,7 @@
 	$(document).ready(ingresarNuevoProducto);
 
 	$(document).ready(mostrarAlertEliminarProducto);
+	$(document).ready(ocultarAlertEliminarProducto);
 	$(document).ready(eliminarProducto);
 
 	$(document).ready(abrirModalEditarProducto);

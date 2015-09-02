@@ -10,9 +10,9 @@ $sql = "SELECT productos.nombreProducto,
 ventas.cantidadVendida,
 productos.valorVentaNetoProducto,
 ventas.porcentajeDescuento,
-ROUND((ventas.cantidadVendida * (productos.valorVentaNetoProducto - (productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01)))),
-ROUND(((ventas.cantidadVendida * (productos.valorVentaNetoProducto - (productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01)))*0.19)),
-ROUND((((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))+((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))*0.19))*ventas.cantidadVendida))
+((ventas.cantidadVendida * (productos.valorVentaNetoProducto - (productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01)))),
+(((ventas.cantidadVendida * (productos.valorVentaNetoProducto - (productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01)))*0.19)),
+((((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))+((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))*0.19))*ventas.cantidadVendida))
 FROM productos, ventas
 WHERE productos.codProducto = ventas.codProducto
 AND ventas.estadoConfirmado = '1'

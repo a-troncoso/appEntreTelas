@@ -3,7 +3,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<meta charset="UTF-8">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Compras</title>
@@ -61,7 +64,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-xs-2">
-						<label for="" class="control-label">CIUDAD</label>
+						<label for="" class="control-label">COMUNA</label>
 					</div>
 					<div class="col-xs-3">
 						<input type="text" id="inpCiudad" class="form-control" disabled="disabled">
@@ -168,6 +171,87 @@
 		</div>
 	</div>
 
+	<!-- VENTANA MODAL INGRESAR PROVEEDOR -->
+	<div class="modal fade" id="modalIngresarProveedor" tabindex="-1" role="dialog" aria-labelleby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4>INGRESAR PROVEEDOR</h4>
+				</div>
+				<div class="modal-body">
+					<div id="alertFaltaRellenar" class="alert alert-danger" role="alert">
+						<p><strong>Error: </strong>Faltan campos por rellenar.</p>
+					</div>
+
+					<div class="row">
+	                    <div class="col-md-12">
+		                    <form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpRutNuevoProveedor">Rut</label>
+									<div class="col-xs-3">
+										<div class="input-group">
+											<input type="number" id="inpRutNuevoProveedor" class="form-control" min="0" style="width: 217px;">
+											<span class="input-group-addon">-</span>
+											<input type="number" id="inpCodVerificadorNuevoProveedor" class="form-control" min="0" style="width: 70px;">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpNombreNuevoProveedor">Nombre</label>
+									<div class="col-md-7">
+										<input id="inpNombreNuevoProveedor" class="form-control input-md" name="inpNombreNuevoProveedor" placeholder="Nombre nuevo proveedor" type="text" >
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpGiroNuevoProveedor">Giro</label>
+									<div class="col-md-7">
+										<input id="inpGiroNuevoProveedor" name="inpGiroNuevoProveedor" type="text" placeholder="Giro nuevo proveedor" class="form-control input-md">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpDireccionNuevoProveedor">Dirección</label>
+									<div class="col-md-7">
+										<input id="inpDireccionNuevoProveedor" class="form-control input-md" name="inpDireccionNuevoProveedor" placeholder="Dirección nuevo proveedor" type="text" >
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="selRegionNuevoProveedor">Región</label>
+									<div class="col-md-7">
+										<select id="selRegionNuevoProveedor" class="form-control"></select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="selComunaNuevoProveedor">Comuna</label>
+									<div class="col-md-7">
+										<select id="selComunaNuevoProveedor" class="form-control"></select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpTelefonoNuevoProveedor">Teléfono</label>
+									<div class="col-md-7">
+										<input id="inpTelefonoNuevoProveedor" class="form-control input-md" name="inpTelefonoNuevoProveedor" type="number">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpEmailNuevoProveedor">Email</label>
+									<div class="col-md-7">
+										<input id="inpEmailNuevoProveedor" class="form-control input-md" name="inpEmailNuevoProveedor" type="email" >
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="btnIngresarProveedor" class="btn btn-success">Ingresar</button>
+					<button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIN VENTANA MODAL -->
+
 	<!-- VENTANA MODAL INGRESAR PRODUCTO -->
 	<div class="modal fade" id="modalIngresarProducto" tabindex="-1" role="dialog" aria-labelleby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -208,6 +292,19 @@
 										<input id="inpValorBrutoVenta" class="form-control input-md" name="inpValorBrutoVenta" type="number" >
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpStockCriticoProducto">Stock crítico</label>
+									<div class="col-md-7">
+										<input id="inpStockCriticoProducto" class="form-control input-md" name="inpStockCriticoProducto" type="number" min="0" value="25">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="inpImagenProducto">Imagen</label>
+	                    			<div class="col-xs-7">
+	                    				<input type="file" id="inpImagenProducto" class="filestyle form-control" name="inpImagenProducto">
+	                    				<span class="help-block">IMPORTANTE: La imagen debe ser cuadrada y en formato JPG.</span>
+	                    			</div>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -228,6 +325,12 @@
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/funcionesCompras.js"></script>
 	<script>
+
+	$(document).ready(abrirModalNuevoProveedor);
+	$(document).ready(cargarRegiones);
+	$(document).ready(cargarComunas);
+	$(document).ready(ingresarNuevoProveedor);
+	
 	$(document).ready(cargarNombresProveedores);
 	$(document).ready(cargarDatosProveedorSeleccionado);
 	$(document).ready(cargarDocumentos);

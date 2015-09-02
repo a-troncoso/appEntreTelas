@@ -1,4 +1,4 @@
-$(document).ready(cargarTodosProductosPedidos());
+﻿$(document).ready(cargarTodosProductosPedidos());
 $(document).ready(cargarTodosProductosPedidosParaImprimir());
 $(document).ready(abrirModalEditarProductoDelPedido());
 $(document).ready(verificaSiHayPedidos());
@@ -32,6 +32,7 @@ function separarMiles(valor) {
 
 function cargarTodosProductosPedidos(){
 	$.ajax({
+		async: false,
 		data: ({filtraPHP: "0", idVentaSeleccionadaPHP: ""}),
 		dataType: 'json',
 		timeout: 60000,
@@ -101,7 +102,7 @@ function establecePedidoConfirmado(){
 function imprimirTicket(){
 	// $("#btnImprimirPedido").click(function(){
 		var options = { mode : "iframe", popClose : "true", extraCss : "", retainAttr : "", extraHead : '<meta charset="utf-8" />,<meta http-equiv="X-UA-Compatible" content="IE=edge"/>' };
-		// var options = { mode : "iframe", popHt : "500", popWd: "400", popX: "500", popY: "600",  popTitle:"hola", popClose: "false", strict: "undefined"};
+		var options = { mode : "iframe", popHt : "500", popWd: "400", popX: "500", popY: "600",  popTitle:"hola", popClose: "false", strict: "undefined"};
 		$("#contenidoImprimir").printArea(options);
 	// });
 
@@ -128,6 +129,7 @@ function generarTicket(){
 
 function cargarTodosProductosPedidosParaImprimir(){
 	$.ajax({
+		async: false,
 		data: ({filtraPHP: "0", idVentaSeleccionadaPHP: ""}),
 		dataType: 'json',
 		timeout: 60000,
@@ -142,11 +144,10 @@ function cargarTodosProductosPedidosParaImprimir(){
 			for(var i in data){
 				$("#cuerpoTablaPedido").append(
 					'<tr>' +
-						'<td>' + data[i][2] + '</td>' +
-						// '<td>' + data[i][5] + '</td>' +
-						'<td>' + data[i][7] + ' %</td>' +
-						'<td>$ ' + separarMiles(data[i][8]) + '</td>' +
-						// '<td>' + data[i][7] + '</td>' +
+						'<td style="font-size: x-small; padding-top: 2px;padding-bottom: 2px">' + data[i][2] + '</td>' +
+						'<td style="font-size: x-small; padding-top: 2px;padding-bottom: 2px">' + data[i][6] + '</td>' +
+						'<td style="font-size: x-small; padding-top: 2px;padding-bottom: 2px">' + data[i][7] + ' %</td>' +
+						'<td style="font-size: x-small; padding-top: 2px;padding-bottom: 2px">$' + separarMiles(data[i][8]) + '</td>' +
 					'</tr>');
 			}
 		}
@@ -155,6 +156,7 @@ function cargarTodosProductosPedidosParaImprimir(){
 }
 function cargarValorTotalDelPedido(){
 	$.ajax({
+		async: false,
 		dataType: 'json',
 		timeout: 60000,
 		type: 'POST',
@@ -166,11 +168,10 @@ function cargarValorTotalDelPedido(){
 		success: function(data){
 			$("#cuerpoTablaPedido").append(
 				'<tr>' +
-					'<td><strong>Total</strong></td>' +
-					// '<td>' + data[i][5] + '</td>' +
-					'<td></td>' +
-					'<td>$ ' + separarMiles(data[0][0]) + '</td>' +
-					// '<td>' + data[i][7] + '</td>' +
+					'<td style="font-size: x-small"><strong>Total</strong></td>' +
+					'<td style="font-size: x-small"></td>' +
+					'<td style="font-size: x-small"></td>' +
+					'<td style="font-size: x-small">$' + separarMiles(data[0][0]) + '</td>' +
 				'</tr>');
 		}
 	});

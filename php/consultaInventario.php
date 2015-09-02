@@ -92,11 +92,14 @@ $sql4 = mysql_query("CREATE VIEW vistaCompras AS
 $sql5 = mysql_query("SELECT vistaCompras.codProducto,
 	vistaCompras.nombreProducto,
 	`SUM(``SUM(compras.cantidadComprada)``)`-`SUM(``SUM(ventas.cantidadVendida)``)`,
-	vistaCompras.stockCriticoProducto
-	FROM `vistaCompras`, `vistaVentas`
+	vistaCompras.stockCriticoProducto,
+	((productos.valorVentaNetoProducto)+(productos.valorVentaNetoProducto * 0.19))*(`SUM(``SUM(compras.cantidadComprada)``)`-`SUM(``SUM(ventas.cantidadVendida)``)`)
+	FROM `vistaCompras`, `vistaVentas`, `productos`
 	WHERE vistaCompras.codProducto = vistaVentas.codProducto
+	AND productos.codProducto = vistaCompras.codProducto
+	AND productos.codProducto = vistaVentas.codProducto
 	GROUP BY vistaCompras.codProducto, vistaCompras.nombreProducto, vistaCompras.stockCriticoProducto
-	ORDER BY ((`SUM(``SUM(compras.cantidadComprada)``)`-`SUM(``SUM(ventas.cantidadVendida)``)`) / vistaCompras.stockCriticoProducto) ASC;");
+	ORDER BY vistaCompras.nombreProducto ASC;");
 
 
 $arrDatos = array();

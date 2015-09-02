@@ -23,6 +23,10 @@ function separarMiles(valor) {
 	return res;
 }
 
+function redondearDosDecimales(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
 function cargarTodosProductos(){
 	$.ajax({
 		data:({nombreProductoPHP: '', codProductoPHP: '%%'}),
@@ -39,31 +43,27 @@ function cargarTodosProductos(){
 			for(var i in data){
 				$('#cuerpoTablaProductos').append(
 					"<tr>" +
-						"<td>" + data[i][0] + "</td>" +
+						"<td class='numeros'>" + data[i][0] + "</td>" +
 						"<td>" + data[i][1] + "</td>" +
-						"<td>$ " + separarMiles(data[i][2]) + "</td>" +
-						"<td>$ " + separarMiles(data[i][4]) + "</td>" +
-						"<td><button type='button' id='" + data[i][0] + "' class='editarProducto btn btn-warning' data-toggle='modal'>Editar</button></td>" +
+						"<td class='numeros'>$ " + separarMiles(Math.round(data[i][2])) + "</td>" +
+						"<td class='numeros'>$ " + separarMiles(data[i][4]) + "</td>" +
+						"<td class='numeros'><button type='button' id='" + data[i][0] + "' class='editarProducto btn btn-warning' data-toggle='modal'>Editar</button></td>" +
 					"</tr>");
 			}
-			$('#cuerpoTablaProductos').append(
-				"<tr>" +
-					"<td><button type='button' id='' class='btnNuevoProducto btn btn-primary' data-toggle='modal'>Nuevo</button></td>" +
-					"<td></td>" +
-					"<td></td>" +
-					"<td></td>" +
-				"</tr>"
-			);
 		}
 	});
 }
 
 function abrirModalNuevoProducto(){
 	$("#cuerpoTablaProductos").on('click', '.btnNuevoProducto', function(){
+
+	});
+
+	$("#btnNuevoProducto").click(function(){
 		$("#modalIngresarProducto").modal("show");
 		$("#alertaModalIngresarProducto").html("");
 		$("#alertaModalIngresarProducto").css('display', 'none');
-	});
+	})
 
 	// Este evento fuerza a que el input "inpNombreProducto" tenga el foco despues de abrir el modal
 	$('#modalIngresarProducto').on('shown.bs.modal', function () {
@@ -137,12 +137,13 @@ function ingresarNuevoProducto(){
 
 function calcularValorBrutoProducto(contenedorModificado, contenedorCalculado){
 	$(contenedorModificado).on('input', function(){
-		$(contenedorCalculado).val(Math.round(parseInt($(contenedorModificado).val()) + (parseInt($(contenedorModificado).val()) * 0.19)));
+		$(contenedorCalculado).val(redondearDosDecimales(parseInt($(contenedorModificado).val()) + (parseInt($(contenedorModificado).val()) * 0.19)));
 	});
 }
+
 function calcularValorNetoProducto(contenedorModificado, contenedorCalculado){
 	$(contenedorModificado).on('input', function(){
-		$(contenedorCalculado).val(Math.round(parseInt($(contenedorModificado).val()) / (1.19)));
+		$(contenedorCalculado).val(redondearDosDecimales(parseInt($(contenedorModificado).val()) / (1.19)));
 	});
 }
 
@@ -226,6 +227,12 @@ function editarProducto(){
 function mostrarAlertEliminarProducto(){
 	$("#btnEliminarProducto").click(function(){
 		$("#alertConfirmaEliminarProducto").css("display", "block");
+	});
+}
+
+function ocultarAlertEliminarProducto(){
+	$("#btnNoEliminarProducto").click(function(){
+		$("#alertConfirmaEliminarProducto").css("display", "none");
 	});
 }
 function eliminarProducto(){

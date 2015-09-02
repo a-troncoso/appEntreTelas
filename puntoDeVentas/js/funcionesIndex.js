@@ -15,13 +15,13 @@ function cargarTodosVendedores(){
 			$("#contenedorCuadrosVendedores").html("");
 			for(var i in data){
 				$("#contenedorCuadrosVendedores").append(
-					'<div class="col-md-2 col-sm-4 col-xs-4">' +
+					'<div class="col-md-3 col-sm-4 col-xs-6">' +
 						'<a href="#" id=' + data[i][0] + ' class="cuadrosVendedores" style="text-decoration: none" >' +
 							'<div class="panel panel-primary text-center no-boder bg-color-red">' +
 								'<div class="panel-body">' +
 									'<img src="img/vendedores/no_photo.jpg" class="img-responsive">' +
 								'</div>' +
-								'<div class="panel-footer back-footer-blue" style="color: white"><strong>' + data[i][1] + '</strong></div>' +
+								'<div class="panel-footer back-footer-blue-oil" style="color: white"><strong>' + data[i][1] + '</strong></div>' +
 							'</div>' +
 						'</a>' +
 					'</div>');

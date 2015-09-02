@@ -1,4 +1,8 @@
+
+
 $(document).ready(abrirModalIngresarProductoAlPedido());
+$(document).ready(detectarSiCargaDesdeDispositivoMovil());
+
 $(document).ready(cargarTodosProductos());
 $(document).ready(buscarProductoALPresionarEnter());
 $(document).ready(buscarProductoALPresionarBotonBuscar());
@@ -6,7 +10,18 @@ $(document).ready(agregarProductoAlPedido());
 $(document).ready(calculaTotalAlCambiarCantidad());
 $(document).ready(calculaTotalAlCambiarDescuento());
 
+
 var valorProducto;
+
+function detectarSiCargaDesdeDispositivoMovil(){
+	var dispositivo = navigator.userAgent.toLowerCase();
+	if( dispositivo.search(/iphone|ipod|ipad|android/) > -1 ){
+		console.log("Se está cargando desde un dispositivo móvil");
+	}else{
+		cargarTodosProductos();
+	}
+
+}
 
 function separarMiles(valor) {
 	var nums = new Array();
@@ -80,7 +95,7 @@ function cargarTodosProductos(){
 							'<div class="panel panel-primary text-center no-boder bg-color-red">' +
 								// '<div><span style="color:#BF2072">En existencia: 3</span></div>' +
 								'<div class="panel-body">' +
-									'<img src="img/telasCatalogo/prueba1.jpg" class="img-responsive">' +
+									'<img src="img/telasCatalogo/no_photo.jpg" class="img-responsive">' +
 									' <h3>$ ' + separarMiles(data[i][4]) + '</h3>' +
 								'</div>' +
 								'<div class="panel-footer back-footer-blue-oil" style="color: white"><strong>' + data[i][1] + '</strong></div>' +
@@ -162,8 +177,7 @@ function agregarProductoAlPedido(){
 					$("#inpDescuento").val("");
 					$("#inpTotal").val("");
 					$('#modalAgregarProductoAlPedido').modal('hide');
-					// alert(data);
-					cargarTodosProductos();
+					// cargarTodosProductos();
 				}
 			});
 		}else{

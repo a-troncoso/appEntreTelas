@@ -39,6 +39,14 @@ function llamarPaginasSegunTabSeleccionado(){
 			}
 		});
 	});
+	$('#btnVendedores').click(function() {
+		$.ajax({
+			url: 'vendedores.php',
+			success: function(data){
+				$('#container').html(data);
+			}
+		});
+	});
 	$('#btnProveedores').click(function() {
 		$.ajax({
 			url: 'proveedores.php',

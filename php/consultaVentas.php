@@ -7,6 +7,7 @@ $fechaVentas = $_POST["fechaVentasPHP"];
 
 // El total se calcula: el valor neto de venta de un produto MENNOS su descuento MÁS el IVA POR la cantidad vendida
 $sql = "SELECT ventas.numTicket,
+ventas.numDocPago,
 vendedores.nombreVendedor,
 ROUND(SUM(((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))+((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))*0.19))*ventas.cantidadVendida)), 
 ventas.estadoPagado

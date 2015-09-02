@@ -1,4 +1,4 @@
-﻿<?php session_start(); ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,6 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Punto de venta EntreTelas</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <!-- Bootstrap Styles-->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
@@ -42,7 +44,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Ajustes</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                        <li><a href="index.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -55,7 +57,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
                     <li>
-                        <a class="active-menu" href="catalogo.php"><i class="fa fa-list"></i> Catálogo</a>
+                        <a class="active-menu" href="catalogo.php"><i class="fa fa-list"></i> Cat&aacutelogo</a>
                     </li>
                     <li>
                         <a href="pedido.php"><i class="fa fa-file-text"></i> Pedido</a>
@@ -76,30 +78,30 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Catálogo de productos <small>Entretelas</small>
+                            Cat&aacutelogo de productos <small>Entretelas</small>
                         </h1>
                     </div>
                 </div>
 
                 <!-- ROW BUSCADOR -->
-                 <div class="row">
+                 <div class="row" >
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <h4>Buscar</h4>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="padding-bottom: 20px;">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <!-- SE DEBE INDICAR ACTION="#" PARA QUE EL FORMULARIO QUITE LA ACCION POR DEFECTO AL PRESIONTAR ENTER -->
-                        <form action="#" class="form-horizontal">
+                        <!-- <form class="form-horizontal" role="form"  > -->
                             <div class="form-group">
                                 <div class="col-md-11 col-sm-11 col-xs-11">
-                                    <input id="inpBuscarProducto" class="form-control" placeholder="Nombre roducto">
+                                    <input id="inpBuscarProducto" class="form-control" placeholder="Nombre roducto" autofocus>
                                 </div>
                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                     <button id="btnBuscarProducto" class="btn btn-primary" > <i class="fa fa-search"></i></button>
                                 </div>
                             </div>
-                        </form>
+                        <!-- </form> -->
                     </div>
                 </div>
                 <!-- FIN ROW BUSCADOR -->
@@ -154,7 +156,7 @@
                                 <form action="" class="form-horizontal" role="form">
                                     <div class="form-group">
                                         <div class="col-xs-5">
-                                            <label class="control-label" for="">Código</label>
+                                            <label class="control-label" for="">C�digo</label>
                                         </div>
                                         <div class="col-xs-7">
                                             <input id="inpCodProducto" class="form-control" type="number" disabled="disabled">

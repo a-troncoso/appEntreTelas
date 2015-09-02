@@ -3,9 +3,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<!-- FontAwesome Styles-->
-    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/estilosVentas.css">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Ventas</title>
@@ -13,18 +16,33 @@
 	.lblModalDetalleVenta{
 		margin-left: 9px;
 	}
+	.numeros{
+		text-align: right;
+	}
 	</style>
+	<script>
+		$('#btnExportarExcel').click(function(){
+			var fechaSeleccionada = $("#inpFecha").val();
+			$(location).attr('href','php/reporteExcelDetallesVentasDia.php?fecha=' + fechaSeleccionada);
+		});
+		$('#btnExportarExcelDetallesMes').click(function(){
+			var fechaSeleccionada = $("#inpFecha").val();
+			var arrayFecha = fechaSeleccionada.split("-");
+			var mes = arrayFecha[1];
+			$(location).attr('href','php/reporteExcelDetallesVentasMes.php?mes=' + mes);
+		});
+	</script>
 </head>
 
 <body>
 	<div class="row" >
-		<div class="col-md-12">
+		<div class="col-md-10">
 			<form action="" class="form-horizontal" role="form">
 				<div class="form-group">
 					<div class="col-xs-2">
 						<label class="control-label" for="">FECHA:</label>
 					</div>
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 						<i><input type="date" id="inpFecha" class="form-control"></i>
 					</div>
 					<!-- <div class="col-xs-2"> -->
@@ -44,6 +62,9 @@
 				</div>
 			</form>
 		</div>
+		<div class="col-md-2">
+			<button id="btnRefrescarVentasDia" class="btn btn-default" type="button"><i class="fa fa-refresh fa-3x" style="color: #219A96"></i></button>
+		</div>
 	</div>
 
 	<!-- LINEA SEPARADORA -->
@@ -55,6 +76,7 @@
 				<thead>
 					<tr>
 						<th>TICKET</th>
+						<th>N° DOCUMENTO PAGO</th>
 						<th>VENDEDOR</th>
 						<th>TOTAL</th>
 						<th>DETALLES</th>
@@ -148,7 +170,7 @@
 									<label class="lblModalDetalleVenta control-label" for="">Vuelto</label>
 								</div>
 								<div class="col-xs-3">
-									<input type="number" id="inpVuelto" class="form-control">
+									<input type="number" id="inpVuelto" class="form-control" >
 								</div>
 							</div>
 						</form>
@@ -156,6 +178,8 @@
 				</div>
 
 				<div class="modal-footer">
+					<button id="btnDesbloquearVenta" class="btn btn-default"><i class="fa fa-unlock"></i></button>
+					<button id="btnEditarVenta" class="btn btn-warning" data-dismiss="modal">Editar</button>
 					<button id="btnAnularVenta" class="btn btn-danger" data-dismiss="modal">Anular</button>
 					<button id="btnPagarVenta" class="btn btn-success" data-dismiss="modal">Pagar</button>
 					<button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -182,7 +206,7 @@
 								<tr style="color:#136E6A">
 									<th>Documento</th>
 									<th>Rango boletas</th>
-									<th>Total (+ IVA)</th>
+									<th class="numeros">Total</th>
 								</tr>
 							</thead>
 							<tbody id="cuerpoTablaVentasDiaPorDocumento" class="cuerpoTablaVentasDiaPorDocumento">
@@ -201,7 +225,7 @@
 							<thead>
 								<tr style="color:#136E6A">
 									<th>Medio de pago</th>
-									<th>Total (+ IVA)</th>
+									<th class="numeros">Total</th>
 								</tr>
 							</thead>
 							<tbody id="cuerpoTablaVentasDiaPorMedioDePago" class="cuerpoTablaVentasDiaPorMedioDePago">
@@ -220,7 +244,7 @@
 							<thead>
 								<tr style="color:#136E6A">
 									<th>Vendedor</th>
-									<th>Total (+ IVA)</th>
+									<th class="numeros">Total</th>
 								</tr>
 							</thead>
 							<tbody id="cuerpoTablaVentasDiaPorVendedor" class="cuerpoTablaVentasDiaPorVendedor">
@@ -253,6 +277,8 @@
 				</div>
 
 				<div class="modal-footer">
+					<button id="btnExportarExcel" type="button" class="btn btn-default" aria-label="Exportar Excel" data-toggle="tooltip" data-placement="top" title="Exportar a Excel"><i style="color:#227547" class="fa fa-file-excel-o"></i></button>
+					<button id="btnExportarPDF" type="button" class="btn btn-default" aria-label="Exportar PDF" data-toggle="tooltip" data-placement="top" title="Exportar a PDF"><i style="color:#DC0002" class="fa fa-file-pdf-o"></i></button>
 					<button id="btnImprimirDetallesVentasDelDia" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
 					<button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 				</div>
@@ -261,39 +287,45 @@
 	</div>
 	<!-- FIN VENTANA MODAL -->
 
-	<!-- VENTANA MODAL DETALLES DE LAS VENTAS DEL DIA -->
+	<!-- VENTANA MODAL DETALLES DE LAS VENTAS DEL MES -->
 	<div class="modal fade" id="modalDetallesVentasDelMes" tabindex="-1" role="dialog" aria-labelleby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button typ="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4>DETALLES DE LA VENTAS DEL MES <strong><span class="spnFechaDetallesVentaDelMes"></span></strong></h4>
+					<h4>DETALLES DE LAS VENTAS DEL MES DE <strong><span class="spnMesDetallesVentaDelMes"></span></strong></h4>
+					<button id="btnVentasMesPorDocumento" class="btn btn-success">Por documento</button>
+					<div class="btn-group">
+						<button type="button" id="btnVentasMesPorVendedor" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						Por vendedor <span class="caret"></span>
+						</button>
+						<ul id="listaVendedores" class="dropdown-menu" role="menu"></ul>
+					</div>
+					<button id="btnVentasMesPorVendedores" class="btn btn-success">Por vendedores</button>
 				</div>
 				<div id="zonaImprimibleDetallesVentasDelMes" >
 					<h4 id="tituloImprimibleDetallesVentasMes" style="display: none">RESUMEN DEL MES <strong><span class="spnMesDetallesVentaDelMes"></span></strong></h4>
 					<div class="modal-body">
-						<h4>Por documento de venta</h4>
+						<h4 id="subtituloDetallesVentaMes">Por documento de venta</h4>
 						<table id="tablaVentasMes" class="table table-hover">
-							<thead>
-								<tr style="color:#136E6A">
+							<thead id="cabeceraTablaVentasMes">
+								<!-- <tr style="color:#136E6A">
 									<th>Día</th>
-									<th>Total venta diaria</th>
-									<th>Total boleta</th>
-									<th>Rango boletas</th>
-									<th>Total factura</th>
-									<th>Alvaro</th>
-									<th>Marysol</th>
-								</tr>
+									<th>Total ventas diaria</th>
+									<th>Total boletas</th>
+									<th>Total facturas</th>
+									<th>Total voucher transback</th>
+								</tr> -->
 							</thead>
 							<tbody id="cuerpoTablaVentasMes" class="cuerpoTablaVentasMes">
-								<!--<tr>
-									<td>Boletas</td>
-									<td>$ 112.300</td>
-								</tr>-->
 							</tbody>
 						</table>
+					</div>
+				</div>
 
 				<div class="modal-footer">
+					<button id="btnExportarExcelDetallesMes" type="button" class="btn btn-default" aria-label="Exportar Excel" data-toggle="tooltip" data-placement="top" title="Exportar a Excel"><i style="color:#227547" class="fa fa-file-excel-o"></i></button>
+					<button id="btnExportarPDFDetallesMes" type="button" class="btn btn-default" aria-label="Exportar PDF" data-toggle="tooltip" data-placement="top" title="Exportar a PDF"><i style="color:#DC0002" class="fa fa-file-pdf-o"></i></button>
 					<button id="btnImprimirDetallesVentasDelMes" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
 					<button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 				</div>
@@ -315,18 +347,30 @@
 	$(document).ready(cargarTotalVentasDelDia);
 
 	$(document).ready(abrirModalDetallesVentasDelDia);
-	
+
+	$(document).ready(abrirModalDetallesVentasPorDoc);
+
 	$(document).ready(abrirModalDetallesVentasDelMes);
-	$(document).ready(cargarDetallesVentasDelMes);
+
+	$(document).ready($('.dropdown-toggle').dropdown());
+	$(document).ready(cargarDetallesVentasPorDocDelMesAlApretarBoton);
+	$(document).ready(cargarDetallesVentasDelMesPorVendedorAlApretarBoton);
+	$(document).ready(cargarDetallesVentasMesPorVendedores);
 
 	$(document).ready(cargarVentas);
 	$(document).ready(mostrarVentasAlCambiarFecha);
+	$(document).ready(refrescarVentasDiaAlPresionaBotonRefresh);
 	$(document).ready(cargarDetallesVenta);
-	$(document).ready(cargarDocumentosYMediosDePago);
+	// $(document).ready(cargarDocumentosYMediosDePago);
+	$(document).ready(seleccionarOpcionTransbankAlSeleccionarVoucher);
 	$(document).ready(calcularVuelto);
 	$(document).ready(establecerVentaPagada);
 	$(document).ready(anularVenta);
+	$(document).ready(desbloquearControlesVenta);
+	$(document).ready(editarVenta);
 	$(document).ready(imprimirDetallesVentasDelDia);
+	$(document).ready(imprimirDetallesVentasDelMes);
+
 	</script>
 </body>
 </html>
