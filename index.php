@@ -76,17 +76,6 @@
                                 <input  id="btn-login" type="submit" class="btn btn-custom btn-lg btn-block" value="Ingresar">
                             </div>
                         </div>
-
-                        <!-- <div class="form-group">
-                            <div class="col-md-12 control">
-                                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                    ¿No tienes cuenta?
-                                <a href="#" id="btnRegistrateAqui" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                                    Registrate aqui!
-                                </a>
-                                </div>
-                            </div>
-                        </div> -->
                     </form>
                 </div>
             </div>  
