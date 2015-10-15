@@ -4,7 +4,8 @@ function separarMiles(valor) {
 	var nums = new Array();
 	var simb = "."; //Éste es el separador
 	valor = valor.toString();
-	valor = valor.replace(/\D/g, "");   //Ésta expresión regular solo permitira ingresar números
+	//Ésta expresión regular solo permitira ingresar números (la quité ya que no acepta negrativos)
+	// valor = valor.replace(/\D/g, "");
 	nums = valor.split(""); //Se vacia el valor en un arreglo
 	var long = nums.length - 1; // Se saca la longitud del arreglo
 	var patron = 3; //Indica cada cuanto se ponen las comas
@@ -916,14 +917,16 @@ function cargarDocumentosYMediosDePago(numTicket){
 		timeout: 60000,
 		type: 'POST',
 		error: function(jqXHR,text_status,strError){
-			$("#selDocPago").hmtml("");
+			$("#selDocPago").html("");
 			alert("Ha habido un error al cargar los documentos y/o medios de pago: " + strError);
 		},
 		success: function(data){
 			$("#selDocPago").html("");
 			// Sólo muestro desde el registro 1 (el registro 0 dice 'sin definir') hasta el registro 3 (omite factura afecta y exenta)
 			for (var i = 0; i < data.length; ++i) {
-				$("#selDocPago").append("<option id='" + data[i][0] + "' value='" + data[i][0] + "'>" + data[i][1] + "</option>");
+				if (data[i][0] !== '1') {
+					$("#selDocPago").append("<option id='" + data[i][0] + "' value='" + data[i][0] + "'>" + data[i][1] + "</option>");
+				}
 			}
 		}
 	});
@@ -941,7 +944,9 @@ function cargarDocumentosYMediosDePago(numTicket){
 			$("#selMedioPago").html("");
 			// Sólo muestro desde el registro 1 (el registro 0 dice 'sin definir')
 			for (var i = 0; i < data.length; ++i) {
-				$("#selMedioPago").append("<option id='" + data[i][0] + "' value='" + data[i][0] + "'>" + data[i][1] + "</option>");
+				if (data[i][0] !== '1') {
+					$("#selMedioPago").append("<option id='" + data[i][0] + "' value='" + data[i][0] + "'>" + data[i][1] + "</option>");
+				}
 			}
 		}
 	});
@@ -958,6 +963,7 @@ function seleccionarOpcionTransbankAlSeleccionarVoucher(){
 	});
 }
 
+// FUNCION QUE CALCULA EL VUELTO
 function calcularVuelto(){
 	$("#inpPagaCon").on("input", function(){
 		$("#inpVuelto").val(separarMiles(parseInt($(this).val()) - parseInt($("#inpMontoTotal").val())));
@@ -986,10 +992,12 @@ function establecerVentaPagada(){
 				},
 				success: function(data){
 					$("#inpNumeroDocPago").val("");
-					if (data["estado"] == 1) {alert(data["descripcion"]);}
+					if (data["estado"] == 1) {
+						cargarTotalVentasDelDia();
+						cargarVentas();
+						alert(data["descripcion"]);
+					}
 					if (data["estado"] == 0) {alert(data["descripcion"]);}
-					cargarTotalVentasDelDia();
-					cargarVentas();
 				}
 			});
 		}else{
@@ -1034,7 +1042,6 @@ function desbloquearControlesVenta(){
 
 function editarVenta(){
 	$("#btnEditarVenta").click(function(){
-		console.log('permiso?: ' + permisoEditar);
 
 		if ($("#inpNumeroDocPago").val() > 0 && $("#inpNumeroDocPago").val() != ""){
 			// El numero ticket lo obtengo de lo q dice en la etiqueta con id numTicket
