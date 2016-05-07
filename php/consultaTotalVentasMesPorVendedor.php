@@ -4,6 +4,7 @@ header('Access-Control-Allow-Origin: *');
 include('conec.php');
 
 $mes = $_POST["mesVentasPHP"];
+$ano = $_POST["anoVentasPHP"];
 $rutVendedor = $_POST["rutVendedorPHP"];
 // $mes = "03";
 
@@ -13,7 +14,8 @@ FROM productos, ventas
 WHERE productos.codProducto = ventas.codProducto
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
-AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes';";
+AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano';";
 
 // TOTAL MES POR VENDEDOR
 $sql2 = "SELECT ROUND(SUM(((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))+((productos.valorVentaNetoProducto-(productos.valorVentaNetoProducto*ventas.porcentajeDescuento*0.01))*0.19))*ventas.cantidadVendida))
@@ -22,7 +24,8 @@ WHERE productos.codProducto = ventas.codProducto
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND ventas.rutVendedor = '$rutVendedor'
-AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes';";
+AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano';";
 
 
 // SI NO HAY ERROR EN NINGUNA CONSULTA SE AGREGAN LOS RESULTADOS AL ARREGLO

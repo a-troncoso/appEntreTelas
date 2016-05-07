@@ -4,6 +4,7 @@ header('Access-Control-Allow-Origin: *');
 include('conec.php');
 
 $mes = $_POST["mesVentasPHP"];
+$ano = $_POST["anoVentasPHP"];
 // $mes = "03";
 
 // TOTAL
@@ -16,6 +17,7 @@ AND ventas.rutVendedor = '195553262'
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d')";
 
 $resultado1 = mysql_query($sql1);

@@ -4,6 +4,7 @@ header('Access-Control-Allow-Origin: *');
 include('conec.php');
 
 $mes = $_POST["mesVentasPHP"];
+$ano = $_POST["anoVentasPHP"];
 
 // Verifica si existe la vista vistaVentasMesPorDoc
 $res = mysql_query("SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = 'appentretelas' AND table_name = 'vistaVentasMesPorDoc';");
@@ -25,6 +26,7 @@ WHERE productos.codProducto = ventas.codProducto
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d')";
 
 $sql1 .= " UNION ALL ";
@@ -42,6 +44,7 @@ AND ventas.codDocPago = 2
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d')";
 
 $sql1 .= " UNION ALL ";
@@ -59,6 +62,7 @@ AND ventas.codDocPago = 3
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d')";
 
 $sql1 .= " UNION ALL ";
@@ -76,6 +80,7 @@ AND ventas.codDocPago = 4
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d');";
 
 $resultado1 = mysql_query($sql1);

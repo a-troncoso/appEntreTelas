@@ -4,6 +4,7 @@ header('Access-Control-Allow-Origin: *');
 include('conec.php');
 
 $mes = $_POST["mesVentasPHP"];
+$ano = $_POST["anoVentasPHP"];
 $rutVendedor = $_POST["rutVendedorPHP"];
 
 // Verifica si existe la vista vistaVentasMesPorVendedor
@@ -24,6 +25,7 @@ WHERE productos.codProducto = ventas.codProducto
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d')";
 
 $sql1 .= " UNION ALL ";
@@ -39,6 +41,7 @@ AND ventas.rutVendedor = $rutVendedor
 AND ventas.estadoPagado = 1
 AND ventas.estadoConfirmado = 1
 AND DATE_FORMAT(ventas.fechaVenta, '%m') = '$mes'
+AND DATE_FORMAT(ventas.fechaVenta, '%Y') = '$ano'
 GROUP BY DATE_FORMAT(ventas.fechaVenta, '%d')";
 
 $resultado1 = mysql_query($sql1);
