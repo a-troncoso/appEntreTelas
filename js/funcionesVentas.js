@@ -408,15 +408,16 @@ function abrirModalDetallesVentasDelMes() {
 
 // FUNCION QUE MUESTRA EL TOTAL DE VENTAS POR DOCUMENTO EN CADA DIA DEL MES SELECCIONADO
 function cargarDetallesVentasPorDocDelMes() {
-	var mesVentas = $("#inpFecha").val();
-	var arrayFecha = mesVentas.split("-");
-	var mes = arrayFecha[1];
-	// console.log(mes);
+	var fechaSeleccionada = $("#inpFecha").val();
+	// formato -> 2017-02-11
+	var arrayFecha = fechaSeleccionada.split("-");
+	var mesBusqueda = arrayFecha[1];
+	var anoBusqueda = arrayFecha[0];
 	$.ajax({
 		async: false,
 		data: ({
-			mesVentasPHP: mes,
-			anoVentasPHP: ano
+			mesVentasPHP: mesBusqueda,
+			anoVentasPHP: anoBusqueda
 		}),
 		dataType: 'json',
 		type: 'POST',
@@ -473,8 +474,8 @@ function cargarDetallesVentasPorDocDelMes() {
 	$.ajax({
 		async: false,
 		data: ({
-			mesVentasPHP: mes,
-			anoVentasPHP: ano
+			mesVentasPHP: mesBusqueda,
+			anoVentasPHP: anoBusqueda
 		}),
 		dataType: 'json',
 		type: 'POST',
